@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %} Update Order {% endblock %}
+
+{% block body %}
+
+<style>
+body {
+    background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+                      url('/static/images/BG5.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: "Poppins", sans-serif;
+    color: #fff;
+}
+
+/* Glassmorphism card for updating orders */
+.update-order-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    padding: 30px;
+    text-align: center;
+    max-width: 400px;
+    margin: auto;
+    transition: 0.3s ease;
+}
+
+.update-order-card h4 {
+    color: #5ce1e6;
+    margin-bottom: 25px;
+}
+
+.update-order-card .form-control {
+    margin-bottom: 20px;
+}
+
+.update-order-card .btn-submit {
+    background: #5ce1e6;
+    color: #2a2a2a;
+    border: none;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 10px 16px;
+    width: 100%;
+    transition: 0.3s ease;
+}
+
+.update-order-card .btn-submit:hover {
+    background: #3cbac3;
+    color: #fff;
+    box-shadow: 0 0 12px rgba(92,225,230,0.5);
+}
+</style>
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">Update Order</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="update-order-card">
+
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+
+                    <h4>Order Status</h4>
+
+                    {{ form.order_status(class="form-control") }}
+
+                    {{ form.update(class="btn-submit") }}
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

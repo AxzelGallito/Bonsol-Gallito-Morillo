@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %} Admin Page {% endblock %}
+
+{% block body %}
+
+<!-- Glassmorphism CSS -->
+<style>
+body {
+    background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+                      url('/static/images/BG5.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;  /* <— keeps the background static */
+    height: 100vh;
+    font-family: "Poppins", sans-serif;
+    color: #fff;
+}
+
+
+/* Main container */
+.admin-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+    transition: 0.3s ease;
+}
+
+.admin-container:hover {
+    box-shadow: 0 20px 55px rgba(0, 0, 0, 0.55);
+}
+
+.admin-container h1 {
+    color: #5ce1e6;
+    font-size: 38px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Table styling */
+.admin-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.admin-table thead {
+    background: rgba(92, 225, 230, 0.3);
+    color: #000;
+}
+
+.admin-table th, .admin-table td {
+    padding: 15px 20px;
+    text-align: center;
+    color: #fff;
+}
+
+.admin-table tbody tr {
+    background: rgba(255, 255, 255, 0.05);
+    transition: 0.3s ease;
+}
+
+.admin-table tbody tr:hover {
+    background: rgba(92, 225, 230, 0.2);
+}
+
+.admin-table a {
+    color: #5ce1e6;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.admin-table a:hover {
+    color: #3cbac3;
+    text-decoration: underline;
+}
+</style>
+
+<div class="admin-container">
+    <h1>Admin Page</h1>
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+            
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="/customers">Customers</a></td>
+                <td><a href="/shop-items">Shop Items</a></td>
+                <td><a href="/add-shop-items">Add Shop Items</a></td>
+                <td><a href="/view-orders">View Orders</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

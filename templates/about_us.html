@@ -1,0 +1,280 @@
+{% extends "base.html" %}
+
+{% block title %}About Us{% endblock %}
+
+{% block body_no_container %}
+
+<div class="top-banner"></div>
+
+<style>
+
+    .top-banner {
+        width: 100%;
+        height: 420px; 
+        background-image: url("{{ url_for('static', filename='images/Aboutusbg.PNG') }}");
+        background-size: cover;          
+        background-position: center;     
+        background-repeat: no-repeat;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+        background-color: rgb(255, 255, 255);
+    }
+
+    
+    .hero {
+        padding: 80px 20px;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        background-color: #ffffff;
+    }
+
+    .hero-content {
+        max-width: 700px;
+    }
+
+    .hero p {
+        font-size: 16px;
+        line-height: 1.7;
+        color: #666;
+        margin-bottom: 35px;
+    }
+
+    .hero-btn {
+        display: inline-block;
+        padding: 14px 32px;
+        background-color: #006366;
+        color: white;
+        font-size: 16px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+
+    .hero-btn:hover {
+        background-color: #5ce1e6;
+        color: rgb(0, 0, 0);
+    }
+
+    header {
+        background-color: #ffffff;
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .section {
+        padding: 50px 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .section h2 {
+        color: #000000;
+        font-size: 2em;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    /* ===== MATCH WIDTH WITH MISSION & VISION ===== */
+    .features-wrapper {
+        width: 85%;
+        margin: 0 auto;
+    }
+
+    .features {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: space-between;
+    }
+
+    .feature {
+        flex: 1 1 23%;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        text-align: center;
+        transition: 0.3s;
+    }
+
+    .feature:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
+
+    .feature img {
+        width: 100%;
+        max-width: 350px;
+        height: auto;
+        margin-bottom: 15px;
+        object-fit: contain;
+        border-radius: 12px;
+    }
+
+
+    .team-section {
+        position: relative;
+        background-image: url("{{ url_for('static', filename='images/bg.PNG') }}");
+        background-size: cover;
+        background-position: center;
+        padding: 60px;
+        border-radius: 15px;
+        color: white;
+        max-width: 90%;
+        margin: 50px auto;
+        overflow: hidden;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+    }
+
+    .team-section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(2px);
+        border-radius: 15px;
+    }
+
+    .purpose-box {
+        background: #ffffff;
+        padding: 40px 50px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        width: 85%;
+        margin: 50px auto;
+        text-align: center;
+    }
+
+    .purpose-box h2 {
+        color: rgb(0, 0, 0);
+        font-size: 1.8em;
+        margin-bottom: 15px;
+    }
+
+    .purpose-box p {
+        font-size: 1.1em;
+        line-height: 1.7;
+        color: #444;
+    }
+
+    @media (max-width: 768px) {
+        .features {
+            flex-direction: column;
+        }
+
+        .top-banner {
+            height: 280px;
+        }
+
+        .hero h2 {
+            font-size: 26px;
+        }
+    }
+
+</style>
+
+<section class="hero">
+    <div class="hero-content">
+        <h2>Techonologia is the leading e-commerce platform in Southeast Asia and Philippines.</h2>
+        <p>
+            Launched in 2015, it is a platform tailored for the region, providing customers with an easy,
+            secure and fast online shopping experience through strong payment and fulfillment support.
+            We believe online shopping should be accessible, easy and enjoyable. This is the vision
+            Techonologia aspires to deliver on the platform, every single day.
+        </p>
+
+        <a href="{{ url_for('views.home') }}" class="hero-btn">Explore Techonologia</a>
+    </div>
+</section>
+
+
+<div class="purpose-box">
+    <h2>Our Purpose</h2>
+    <p>
+        We believe in the transformative power of technology and want to
+        change the world for the better by providing a platform to connect
+        buyers and sellers within one community.
+    </p>
+</div>
+
+<h2 style="color: rgb(0, 0, 0); text-align: center;">Our Mission & Vision</h2>
+
+<!-- Mission & Vision -->
+<div style="display: flex; justify-content: center; gap: 30px; margin: 20px auto; width: 85%;">
+
+    <div style="background-color: white; color: black; padding: 25px 40px; border-radius: 8px; 
+                flex: 1; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <h3 style="color: rgb(0, 0, 0); margin-top: 0;">Mission</h3>
+        <p style="margin: 0; line-height: 1.6;">
+            To make shopping easy, fun, and affordable for everyone.
+        </p>
+    </div>
+
+    <div style="background-color: white; color: black; padding: 25px 40px; border-radius: 8px; 
+                flex: 1; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <h3 style="color: rgb(0, 0, 0); margin-top: 0;">Vision</h3>
+        <p style="margin: 0; line-height: 1.6;">
+            To be the leading e-commerce platform in Asia, fostering innovation and inclusivity.
+        </p>
+    </div>
+
+</div>
+
+<!-- FEATURES MATCHING WIDTH OF ABOVE -->
+<div class="features-wrapper">
+    <h2>Key Features & Values</h2>
+    <div class="features">
+        <div class="feature">
+            <img src="../static/images/innovation.jpg" alt="Innovation Icon">
+            <h3>Innovation</h3>
+            <p>We embrace cutting-edge technology to solve real-world problems and enhance user experiences.</p>
+        </div>
+        <div class="feature">
+            <img src="../static/images/community.png" alt="Community Icon">
+            <h3>Community</h3>
+            <p>Building strong connections between sellers, buyers, and our team to create a vibrant ecosystem.</p>
+        </div>
+        <div class="feature">
+            <img src="../static/images/integrity.jpg" alt="Integrity Icon">
+            <h3>Integrity</h3>
+            <p>We uphold transparency, honesty, and ethical practices in everything we do.</p>
+        </div>
+        <div class="feature">
+            <img src="../static/images/growth.jpg" alt="Growth Icon">
+            <h3>Growth</h3>
+            <p>Opportunities for personal and professional development in a fast-paced environment.</p>
+        </div>
+    </div>
+</div>
+
+<section class="team-section">
+    <div style="position: relative; z-index: 2; text-align: center;">
+        <h2 style="color: rgb(255, 255, 255); font-size: 2em; margin-bottom: 20px;">Our Team</h2>
+        <p style="max-width: 800px; margin: 0 auto; line-height: 1.6;">
+            Meet the diverse and talented individuals who make <b>Techinologia</b> thrive.
+            From engineers to marketers, our team is united by a shared passion for excellence and innovation in e-commerce.
+        </p>
+        <div style="text-align: center; margin-top: 30px;">
+            <img src="{{ url_for('static', filename='images/teamphoto.png') }}" alt="" 
+                 style="width: 55%; border-radius: 10px; box-shadow: 0 4px 10px rgba(255,255,255,0.3);">
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2>Why Join Us?</h2>
+    <p>At Techinologia, you'll work on impactful projects, enjoy competitive benefits, and be part of a culture that values creativity and collaboration. Explore our open positions and start your journey with us!</p>
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="#" style="background-color: #006366; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">View Careers</a>
+    </div>
+</section>
+
+{% endblock %}

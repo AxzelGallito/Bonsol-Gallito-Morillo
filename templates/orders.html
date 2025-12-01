@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+
+{% block title %} Orders {% endblock %}
+
+{% block body %}
+
+<!-- Glassmorphism CSS -->
+<style>
+body {
+    background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+                      url('/static/images/BG2.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;  /* <— keeps the background static */
+    height: 100vh;
+    font-family: "Poppins", sans-serif;
+    color: #fff;
+}
+
+
+/* Main container for orders */
+.orders-container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+    transition: 0.3s ease;
+}
+
+.orders-container:hover {
+    box-shadow: 0 20px 55px rgba(0, 0, 0, 0.55);
+}
+
+.orders-container h1 {
+    color: #5ce1e6;
+    font-size: 38px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.orders-container p {
+    color: #d9d9d9;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Individual order card */
+.order-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    transition: 0.3s ease;
+}
+
+.order-card:hover {
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+}
+
+.order-card h3 {
+    color: #5ce1e6;
+    margin-bottom: 5px;
+}
+
+.order-card p {
+    color: #d9d9d9;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+/* Progress bar styling */
+.progress {
+    height: 8px;
+    background-color: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    background-color: #5ce1e6;
+    border-radius: 10px;
+}
+
+/* Buttons */
+.order-card button {
+    font-weight: 600;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
+    background-color: #5ce1e6;
+    color: #000;
+    transition: 0.25s ease;
+    margin-top: 5px;
+}
+
+.order-card button:hover {
+    background-color: #3cbac3;
+    color: #fff;
+    box-shadow: 0 0 12px rgba(92, 225, 230, 0.5);
+}
+</style>
+
+<div class="orders-container">
+
+    <h1>Orders</h1>
+    <p>Here are the orders you have placed.</p>
+
+    {% if orders %}
+        {% for item in orders %}
+        <div class="order-card row align-items-center">
+
+            <!-- PRODUCT IMAGE -->
+            <div class="col-sm-3 text-center">
+                <img src="{{ item.product.product_picture }}" 
+                     alt="" 
+                     class="img-fluid img-thumbnail shadow-sm" 
+                     height="150px" width="150px">
+            </div>
+
+            <!-- PRODUCT DETAILS -->
+            <div class="col-sm-7">
+                <h3>{{ item.product.product_name }}</h3>
+                <p>Quantity: {{ item.quantity }}</p>
+                <p>Price: Php {{ item.price }}</p>
+                <p>Order Status: {{ item.status }}</p>
+
+                <!-- PROGRESS BAR -->
+                {% if item.status == 'Pending' %}
+                <div class="progress mb-2">
+                    <div class="progress-bar" role="progressbar" style="width: 20%;"></div>
+                </div>
+                {% elif item.status == 'Accepted' %}
+                <div class="progress mb-2">
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 40%;"></div>
+                </div>
+                {% elif item.status == 'Out for delivery' %}
+                <div class="progress mb-2">
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 70%;"></div>
+                </div>
+                {% elif item.status == 'Delivered' %}
+                <div class="progress mb-2">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%;"></div>
+                </div>
+                {% elif item.status == 'Canceled' %}
+                <div class="progress mb-2">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: 100%;"></div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- ACTION BUTTONS -->
+            <div class="col-sm-2 text-end">
+                {% if item.status == 'Pending' %}
+                <form action="{{ url_for('views.cancel_order', order_id=item.id) }}" method="POST">
+                    <button type="submit">Cancel</button>
+                </form>
+                {% endif %}
+
+                {% if item.status == 'Delivered' %}
+                <form action="{{ url_for('views.mark_order_received', order_id=item.id) }}" method="POST">
+                    <button type="submit">Received</button>
+                </form>
+
+                <form action="{{ url_for('views.mark_order_not_received', order_id=item.id) }}" method="POST">
+                    <button type="submit">Not Received</button>
+                </form>
+                {% endif %}
+            </div>
+
+        </div>
+        {% endfor %}
+    {% else %}
+        <p style="text-align: center; color: #fff; font-size: 20px;">You have no Orders</p>
+    {% endif %}
+</div>
+
+{% endblock %}

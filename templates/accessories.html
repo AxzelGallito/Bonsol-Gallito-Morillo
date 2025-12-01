@@ -1,0 +1,265 @@
+{% extends "base.html" %}
+
+{% block title %}Accessories Store{% endblock %}
+
+{% block body %}
+
+<style>
+body {
+    background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+                      url('/static/images/BG2.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: "Poppins", sans-serif;
+    color: #fff;
+}
+
+/* PAGE CONTAINER */
+.page-container {
+    padding: 0;
+}
+
+/* FLEX LAYOUT */
+.layout-row {
+    display: flex;
+    gap: 25px;
+}
+
+/* LEFT MENU / SIDEBAR */
+.left-menu-col {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border-radius: 25px;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    padding: 20px;
+    min-width: 200px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.left-menu-title {
+    font-size: 20px;
+    color: #5ce1e6;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.list-group-item {
+    background: rgba(255,255,255,0.05);
+    color: #d9d9d9;
+    border: none;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    transition: 0.25s ease;
+}
+
+.list-group-item:hover {
+    background: rgba(92,225,230,0.15);
+    color: #fff;
+}
+
+.list-group-item.active {
+    background: rgba(92,225,230,0.25);
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 0 12px rgba(92,225,230,0.5);
+}
+
+/* RIGHT CONTENT */
+.right-content-col {
+    flex: 1;
+    padding: 0;
+}
+
+/* STORE HEADER */
+.store-header {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+.store-header h2 {
+    color: #5ce1e6;
+    font-weight: 700;
+}
+
+.store-header p {
+    color: #fff;
+    margin-top: 8px;
+}
+
+/* PRODUCT CARDS */
+.product-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    transition: 0.3s ease;
+    padding: 15px;
+    text-align: center;
+
+    /* 🔒 FIXED CARD SIZE */
+    width: 360px;         /* Lock width */
+    height: 470px;        /* Lock height */
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(92,225,230,0.4);
+}
+
+.product-card img {
+    border-radius: 15px;
+
+    /* 🔒 FIXED IMAGE SIZE */
+    width: 100%;
+    height: 200px;
+
+    object-fit: contain;
+    margin: 0 auto 15px auto; /* centers image */
+    display: block;
+}
+
+.product-card h6 {
+    color: #5ce1e6;
+    margin-bottom: 5px;
+}
+
+.product-card .price {
+    color: #fff;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.product-card .previous-price {
+    color: #d9d9d9;
+    margin-bottom: 10px;
+}
+
+.product-card .stock {
+    color: #d9d9d9;
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+/* BUTTONS */
+.product-card .btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.product-card .btn-group a, .product-card .btn-group button {
+    flex: 1;
+    text-decoration: none;
+    color: #000;
+    background: #5ce1e6;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: 0.25s ease;
+}
+
+.product-card .btn-group a:hover {
+    background: #3cbac3;
+    color: #fff;
+    box-shadow: 0 0 12px rgba(92,225,230,0.5);
+}
+
+.product-card .btn-group button[disabled] {
+    background: gray;
+    color: white;
+}
+</style>
+
+<div class="page-container">
+    <div class="layout-row">
+
+        <!-- CATEGORY SIDEBAR -->
+        <div class="left-menu-col">
+            <div class="left-menu-title">CATEGORIES</div>
+            <div class="list-group">
+
+                <a href="/phones" class="list-group-item {% if active_category == 'phones' %}active{% endif %}">
+                    <i class="fa fa-mobile"></i> Phone
+                </a>
+                <a href="/laptop" class="list-group-item {% if active_category == 'laptop' %}active{% endif %}">
+                    <i class="fa fa-laptop"></i> Laptop
+                </a>
+                <a href="/smart-watch" class="list-group-item {% if active_category == 'smart-watch' %}active{% endif %}">
+                    <i class="fi fi-sr-watch-smart"></i> Smart Watch
+                </a>
+                <a href="/gaming" class="list-group-item {% if active_category == 'gaming' %}active{% endif %}">
+                    <i class="fa fa-gamepad"></i> Gaming
+                </a>
+                <a href="/tv" class="list-group-item {% if active_category == 'tv' %}active{% endif %}">
+                    <i class="fa fa-tv"></i> TV
+                </a>
+                <a href="/accessories" class="list-group-item {% if active_category == 'accessories' %}active{% endif %}">
+                    <i class="fa fa-headset"></i> Accessories
+                </a>
+
+            </div>
+        </div>
+        <!-- RIGHT CONTENT -->
+        <div class="right-content-col">
+
+            <!-- HEADER -->
+            <div class="store-header">
+                <h2>Accessories Store</h2>
+                <p>Find the perfect accessories to complement your style and gadgets!</p>
+            </div>
+
+            <!-- PRODUCT GRID -->
+            <div class="row justify-content-center g-4">
+                {% for item in items %}
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="product-card">
+                        <img src="{{ item.product_picture }}" alt="{{ item.product_name }}">
+                        <h6>{{ item.product_name }}</h6>
+                        
+{% if item.flash_sale %}
+    <div class="price">Php {{ item.current_price }}</div>
+    <div class="previous-price"><strike>Php {{ item.previous_price }}</strike></div>
+{% else %}
+    <div class="price">Php {{ item.previous_price }}</div>
+{% endif %}
+
+                        <div class="btn-group">
+                            {% if item.in_stock > 0 %}
+                                <a href="/add-to-cart/{{ item.id }}">Add to Cart</a>
+                                <a href="/direct-order/{{ item.id }}">Order Now</a>
+                            {% else %}
+                                <button disabled>Out of Stock</button>
+                            {% endif %}
+                        </div>
+
+                        {% if item.in_stock > 0 %}
+                            <div class="stock">{{ item.in_stock }} Items Left</div>
+                        {% else %}
+                            <div class="stock text-danger">Sold Out</div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

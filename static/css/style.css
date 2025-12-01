@@ -1,0 +1,319 @@
+/* =============================
+   GLOBAL / CONTAINER
+============================= */
+body {
+  background-color: #e9e9e9;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.page-container {
+  width: 95%;
+  margin: 0 auto;
+}
+
+/* =============================
+   TWO-COLUMN LAYOUT
+============================= */
+.layout-row {
+  display: flex;
+  gap: 25px;
+}
+
+/* =============================
+   LEFT MENU (STICKY + DARK GREY + TEAL BUTTONS MODERN)
+============================= */
+.left-menu-col {
+  flex: 0 0 250px;
+  position: sticky;
+  top: 20px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+
+  background: #2a2a2a;
+  border-radius: 20px;
+  padding: 30px 24px;
+  color: #A0F0F9;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(160, 240, 249, 0.15);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.left-menu-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5em;
+  font-weight: 700;
+  margin-bottom: 32px;
+  color: #5ce1e6;
+  letter-spacing: 0.08em;
+  user-select: none;
+}
+
+.left-menu-col a {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 14px 20px;
+  margin-bottom: 14px;
+
+  background: #006366;
+  border-radius: 16px;
+  text-decoration: none;
+  color: #A0F0F9;
+  font-family: 'Inter', sans-serif;
+  font-size: 1em;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+
+  box-shadow: 0 2px 6px rgba(0, 99, 102, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.left-menu-col a:first-child {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.left-menu-col a:last-child {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.left-menu-col a i {
+  font-size: 1.3em;
+  color: #A0F0F9;
+  filter: drop-shadow(0 0 2px #004d50);
+  transition: color 0.3s ease, filter 0.3s ease;
+}
+
+.left-menu-col a:hover,
+.left-menu-col a.active {
+  background: #5CE1E6;
+  color: #2a2a2a;
+  box-shadow: 0 4px 12px rgba(92, 225, 230, 0.4);
+  transform: translateX(3px) scale(1.02);
+}
+
+.left-menu-col a:hover i,
+.left-menu-col a.active i {
+  color: #2a2a2a;
+  filter: drop-shadow(0 0 4px #5CE1E6);
+}
+
+.menu-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75em;
+  color: rgba(160, 240, 249, 0.7);
+  margin: 24px 0 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  user-select: none;
+}
+
+/* =============================
+   RIGHT CONTENT COLUMN
+============================= */
+.right-content-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* Banner + Boxes */
+.banner-and-boxes {
+  display: flex;
+  gap: 20px;
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+
+.banner {
+  flex: 1;
+  display: flex;
+  max-width: 95%;
+  height: 722px;
+  overflow: hidden;
+}
+
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+
+.side-boxes {
+  flex: 0 0 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-self: stretch;
+}
+
+.small-box {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  padding: 18px;
+  text-align: center;
+}
+
+.small-box img {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 10px;
+}
+
+.live-banner {
+  background-color: white;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.live-banner img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* =============================
+   PRODUCT GRID (UPDATED)
+============================= */
+.product-grid {
+    display: grid;
+    gap: 25px;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.product-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0; /* 🔥 THE FIX */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* CONSISTENT PRODUCT IMAGE SIZE */
+.product-card img {
+  width: 100%;
+  height: 200px;         /* FIXED HEIGHT FOR ALL IMAGES */
+  object-fit: contain;   /* PREVENT STRETCHING */
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+
+}
+
+.product-card h6,
+.product-card .price,
+.product-card .previous-price,
+.product-card .stock {
+  text-align: center;
+}
+
+.product-card .btn-group {
+  display: flex;
+  flex-direction: column;   /* STACK BUTTONS VERTICALLY */
+  gap: 10px;                /* SPACE BETWEEN BUTTONS */
+  width: 100%;
+  margin-top: auto;
+}
+
+.product-card .btn-group a {
+  width: 100%;               /* FULL WIDTH BUTTONS */
+  padding: 10px;
+  text-decoration: none;
+  background-color: #006366;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9em;
+  text-align: center;
+  transition: background-color 0.2s ease;
+}
+
+.product-card .btn-group a:hover {
+  background-color: #5ce1e6;
+  color: black;
+}
+
+.product-card .previous-price {
+  margin-top: 4px;
+  font-size: 0.9em;
+  color: #999;
+}
+
+/* =============================
+   RESPONSIVE GRID BREAKPOINTS
+============================= */
+@media (max-width: 1200px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .product-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+/* =============================
+   RESPONSIVE LAYOUT
+============================= */
+@media (max-width: 992px) {
+  .layout-row {
+    flex-direction: column;
+  }
+
+  .left-menu-col {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    position: relative;
+    max-height: none;
+  }
+
+  .banner-and-boxes {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .banner {
+    height: auto;
+  }
+
+  .banner img {
+    height: auto;
+  }
+
+  .side-boxes {
+    flex: 1;
+    align-self: auto;
+  }
+}

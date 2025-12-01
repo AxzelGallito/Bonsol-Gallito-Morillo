@@ -1,0 +1,265 @@
+{% extends 'base.html' %}
+
+{% block title %} Add Shop Items {% endblock %}
+
+{% block body %}
+
+<style>
+body {
+    background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+                      url('/static/images/BG5.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: "Poppins", sans-serif;
+    color: #fff;
+}
+
+/* Admin navigation */
+.admin-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border-radius: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+}
+
+.admin-container h1 {
+    color: #5ce1e6;
+    font-size: 32px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.admin-table {
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.admin-table td {
+    padding: 15px 20px;
+    text-align: center;
+    color: #fff;
+}
+
+.admin-table tbody tr {
+    background: rgba(92, 225, 230, 0.3);
+}
+
+.admin-table a {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* Add Item Card */
+.add-item-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 15px 45px rgba(0,0,0,0.4);
+    padding: 30px;
+    text-align: center;
+    max-width: 600px;
+    margin: 50px auto;
+    transition: 0.3s ease;
+}
+
+.add-item-card:hover {
+    transform: translateY(-5px);
+}
+
+.add-item-card h1 {
+    color: #5ce1e6;
+    font-size: 36px;
+    margin-bottom: 25px;
+}
+
+.add-item-card label {
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #5ce1e6;
+    display: block;
+    text-align: left;
+}
+
+/* Inputs */
+.add-item-card input,
+.add-item-card select {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.07);
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+    margin-bottom: 15px;
+    height: 38px;
+    line-height: 1.2;
+}
+
+/* File input */
+.add-item-card input[type="file"] {
+    height: 38px;
+    padding: 0 10px;
+    line-height: 38px;
+    box-sizing: border-box;
+}
+
+.add-item-card input[type="file"]::file-selector-button {
+    background-color: #5ce1e6;
+    color: #000;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.add-item-card input[type="file"]::file-selector-button:hover {
+    background-color: #5ce1e6;
+}
+
+/* Flash Sale checkbox */
+.square-checkbox {
+    width: 20px;
+    height: 20px;
+    background-color: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.25);
+    cursor: pointer;
+    appearance: none;
+    outline: none;
+    position: relative;
+    transition: 0.2s ease-in-out;
+}
+
+.square-checkbox:checked {
+    background-color: #5ce1e6;
+    border-color: #5ce1e6;
+}
+
+.square-checkbox:checked::after {
+    content: '✔';
+    color: #000000;
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Button */
+.add-item-card button {
+    background-color: #5ce1e6;
+    color: #000;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 25px;
+    width: 100%;
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.add-item-card button:hover {
+    color: #fff;
+    box-shadow: 0 0 12px rgba(92,225,230,0.5);
+}
+
+/* 2-column layout */
+.form-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.form-col {
+    flex: 1 1 calc(50% - 10px);
+    min-width: 200px;
+}
+
+@media(max-width: 768px){
+    .form-col { flex: 1 1 100%; }
+}
+</style>
+
+<div class="admin-container">
+    <h1>Admin Page</h1>
+    <table class="admin-table">
+        <tbody>
+            <tr>
+                <td><a href="/customers">Customers</a></td>
+                <td><a href="/shop-items">Shop Items</a></td>
+                <td><a href="/add-shop-items">Add Shop Items</a></td>
+                <td><a href="/view-orders">View Orders</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="add-item-card">
+    <h1>Add Shop Item</h1>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        <div class="form-row">
+            <div class="form-col">
+                <label>Product Name</label>
+                {{ form.product_name(class="form-control") }}
+            </div>
+            <div class="form-col">
+                <label>Previous Price</label>
+                {{ form.previous_price(class="form-control") }}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-col">
+                <label>Current Price</label>
+                {{ form.current_price(class="form-control") }}
+            </div>
+            <div class="form-col">
+                <label>In Stock</label>
+                {{ form.in_stock(class="form-control") }}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-col">
+                <label>Product Picture</label>
+                {{ form.product_picture(class="form-control") }}
+            </div>
+            <div class="form-col">
+                <label>Category</label>
+                {{ form.category(class="form-control") }}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-col">
+                <div class="form-check">
+                    <label>Flash Sale</label>
+                    {{ form.flash_sale(class="square-checkbox") }}
+                </div>
+            </div>
+        </div>
+
+        {{ form.add_product(class="btn", value="Add Product") }}
+    </form>
+</div>
+
+{% endblock %}

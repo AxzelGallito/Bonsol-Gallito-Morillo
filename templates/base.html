@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap JS + Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
+
+    <!-- Icons -->
+    <script src="https://kit.fontawesome.com/d5a5fe7a04.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons@3.3.1/css/all/all.min.css">
+
+    <!-- Local CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <title>TECHNOLOGIA | {% block title %}{% endblock %}</title>
+
+    <style>
+        body {
+            background-color: #bffdfa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1;
+        }
+        footer {
+            background-color: hwb(0 22% 78%);
+            color: white;
+        }
+
+        /* FIXED BUTTON COLORS */
+        .navbar .btn.btn-primary {
+            background-color: #006366 !important;
+            border-color: #006366 !important;
+            color: white !important;
+        }
+        .navbar .btn.btn-primary:hover {
+            background-color: #5ce1e6 !important;
+            border-color: #5ce1e6 !important;
+            color: rgb(0, 0, 0) !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg" style="background-color: hwb(0 22% 78%);">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center"
+            href="/" style="color: white; font-size: 17px; font-weight: bold;">
+                <img src="{{ url_for('static', filename='images/logo.png') }}"
+                    alt="Logo" style="height: 45px; margin-right: 10px;">
+                TECHNOLOGIA
+            </a>
+
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/about-us" style="font-size: 17px;">About Us</a>
+                    </li>
+                </ul>
+
+                <!-- Search -->
+                <form class="d-flex me-4" action="/search" method="POST">
+                    <input class="form-control me-2" name="search" type="search" placeholder="Search">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </form>
+
+                <ul class="navbar-nav">
+
+                    <!-- Cart -->
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-white" href="/cart">
+                            Cart
+                            <span id="cart-count" class="badge ms-1" style="background-color: #006366; color: white;">
+                                {{ cart_count }}
+                            </span>
+                            <i class="fa-solid fa-cart-shopping ms-1"></i>
+                        </a>
+                    </li>
+
+                    <!-- Account -->
+                    <li class="nav-item dropdown mx-2">
+                        <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">
+                            Account
+                        </a>
+                        <ul class="dropdown-menu">
+                            {% if current_user.is_authenticated %}
+                                <li><a class="dropdown-item" href="/profile/{{ current_user.id }}">Profile <i class="fa-solid fa-user"></i></a></li>
+                                <li><a class="dropdown-item" href="/orders">Orders <i class="fa-solid fa-truck-fast"></i></a></li>
+                                <li><a class="dropdown-item" href="/logout">Log Out <i class="fa-solid fa-right-from-bracket"></i></a></li>
+                            {% else %}
+                                <li><a class="dropdown-item" href="/login">Login <i class="fa-solid fa-right-to-bracket"></i></a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash messages -->
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-success alert-dismissible fade show container mt-2" role="alert">
+        <strong>{{ message }}</strong>
+        <button class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endfor %}
+
+    {% block body_no_container %}{% endblock %}
+
+    <main class="container-fluid mt-4 p-0" style="width: 100%;">
+        {% block body %}{% endblock %}
+    </main>
+
+    <footer class="container-fluid text-center p-2 mt-5">
+        <a href="#" style="color: white;">TECHNOLOGIA</a> |
+        <span><i class="fa-sharp fa-regular fa-copyright"></i></span>
+        2025 All rights reserved
+    </footer>
+
+    <!-- FIXED SCRIPTS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Other JS -->
+    <script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/all.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/myScript.js') }}"></script>
+
+    <!-- ⭐ ALLOW CHILD TEMPLATES (like cart.html) TO ADD SCRIPTS -->
+    {% block scripts %}{% endblock %}
+
+</body>
+</html>

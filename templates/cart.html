@@ -1,0 +1,444 @@
+{% extends 'base.html' %}
+
+{% block title %}Cart{% endblock %}
+
+{% block body %}
+
+<style>
+body {
+    background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+                      url('/static/images/BG2.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+    font-family: "Poppins", sans-serif;
+    color: #fff;
+}
+
+/* Custom Notification Above Shopping Cart Header */
+/* Custom Notification Above Shopping Cart Header */
+.custom-alert {
+    position: absolute;
+    left: 50%;
+    top: -70px; /* sits above the header */
+    transform: translateX(-50%) translateY(-10px);
+    width: 420px;
+    background: linear-gradient(to bottom, #102a2c, #3a5656); /* Gradient from dark to lighter shade */
+    backdrop-filter: blur(80%); /* Keep the blur effect */
+    border-radius: 25px;
+    padding: 20px 25px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55);
+    color: #5ce1e6;
+    font-weight: 600;
+    font-size: 18px;
+    z-index: 9999;
+    opacity: 0;
+    transition: all 0.35s ease;
+}
+
+/* Animate */
+.custom-alert.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Button */
+.custom-alert button {
+    background-color: #5ce1e6;
+    border: none;
+    padding: 8px 24px;
+    border-radius: 10px;
+    margin-top: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #000;
+    font-size: 15px;
+    transition: 0.25s ease;
+}
+
+.custom-alert button:hover {
+    background-color: #3cbac3;
+    color: #fff;
+    box-shadow: 0 0 12px rgba(92,225,230,0.6);
+}
+
+/* Main container */
+.cart-container {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+    transition: 0.3s ease;
+}
+
+.cart-container:hover {
+    box-shadow: 0 20px 55px rgba(0, 0, 0, 0.55);
+}
+
+.cart-container h1 {
+    color: #5ce1e6;
+    font-size: 38px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.cart-container p {
+    color: #d9d9d9;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Cart items card */
+.cart-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    transition: 0.3s ease;
+}
+
+.cart-card:hover {
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+}
+
+/* Product image */
+.cart-card img {
+    border-radius: 12px;
+    max-width: 150px;
+    max-height: 150px;
+    object-fit: cover;
+}
+
+/* Product details container with gap */
+.product-details-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Gap between image and product info */
+}
+
+/* Product info flex container with remove button aligned right */
+.product-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+/* Remove button aligned to right, vertically centered */
+.remove-cart {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: 600;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    padding: 6px 12px;
+    background-color: #ff4d4d;
+    color: #fff;
+    transition: 0.25s ease;
+    white-space: nowrap;
+}
+
+.remove-cart:hover {
+    background-color: #e60000;
+    box-shadow: 0 0 12px rgba(255, 77, 77, 0.5);
+}
+
+/* Product details text */
+.cart-card h3 {
+    color: #5ce1e6;
+    margin-bottom: 5px;
+}
+
+.cart-card p {
+    color: #d9d9d9;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+/* Quantity buttons */
+.quantity-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.quantity-container .btn {
+    font-weight: 600;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    padding: 6px 12px;
+    background-color: #5ce1e6;
+    color: #000;
+    transition: 0.25s ease;
+}
+
+.quantity-container .btn:hover {
+    background-color: #3cbac3;
+    color: #fff;
+    box-shadow: 0 0 12px rgba(92, 225, 230, 0.5);
+}
+
+/* Summary panel */
+.summary-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    position: sticky;
+    top: 20px; /* sticky offset from top */
+}
+
+.summary-card h3 {
+    color: #5ce1e6;
+    margin-bottom: 15px;
+}
+
+.summary-card ul {
+    padding-left: 0;
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+.summary-card li {
+    color: #d9d9d9;
+    padding: 8px 0;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Place Order Button - styled like plus/minus buttons */
+#placeOrderBtn {
+    width: 100%;
+    background-color: #5ce1e6;  /* turquoise */
+    color: #000;
+    font-weight: 600;
+    border-radius: 10px;
+    border: none;
+    padding: 10px 0;
+    transition: 0.25s ease;
+    cursor: pointer;
+}
+
+#placeOrderBtn:hover:not(:disabled) {
+    background-color: #3cbac3;
+    color: #fff;
+    box-shadow: 0 0 12px rgba(92, 225, 230, 0.5);
+}
+
+#placeOrderBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+</style>
+
+<div class="cart-container">
+
+    <h1>Shopping Cart</h1>
+    <p>Here are the items that you added to your cart.</p>
+
+    {% if cart %}
+    <div class="row">
+
+        <!-- CART ITEMS -->
+        <div class="col-sm-8">
+            <form id="orderForm" method="POST" action="{{ url_for('views.place_order') }}">
+                {% for item in cart %}
+<div class="cart-card row align-items-center" id="cart-row-{{ item.id }}">
+
+    {% if item.product %}
+        <!-- CHECKBOX -->
+        <div class="col-sm-1 text-center align-self-center">
+            <input type="checkbox" class="select-item" name="selected_items[]" value="{{ item.id }}">
+        </div>
+
+        <!-- PRODUCT IMAGE + INFO -->
+        <div class="col-sm-11">
+            <div class="product-details-wrapper">
+                <img src="{{ item.product.product_picture }}" alt="Product">
+                <div class="product-info">
+                    <h3>{{ item.product.product_name }}</h3>
+
+                    <!-- QUANTITY -->
+                    <div class="quantity-container">
+                        <label>Quantity</label>
+                        <a class="minus-cart btn" pid="{{ item.id }}"><i class="fas fa-minus-square"></i></a>
+                        <span id="quantity{{ item.id }}">{{ item.quantity }}</span>
+                        <a class="plus-cart btn" pid="{{ item.id }}"><i class="fas fa-plus-square"></i></a>
+                    </div>
+
+                    <!-- PRICE -->
+                    <div class="d-flex justify-content-between mt-2">
+                        <p class="mb-0"><strong class="price" data-price="{{ item.product.current_price }}">Php {{ item.product.current_price }}</strong></p>
+                    </div>
+
+                    <!-- REMOVE BUTTON -->
+                    <a href="#" class="remove-cart" pid="{{ item.id }}">Remove</a>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <!-- PRODUCT DELETED -->
+        <div class="col-12 text-center">
+            <h3>Product removed</h3>
+            <p>Quantity: {{ item.quantity }}</p>
+            <a href="#" class="remove-cart" pid="{{ item.id }}">Remove from cart</a>
+        </div>
+    {% endif %}
+
+</div>
+{% endfor %}
+
+            </form>
+        </div>
+
+        <!-- SUMMARY PANEL -->
+        <div class="col-sm-4">
+            <div class="summary-card">
+                <h3>Selected Items Summary</h3>
+                <ul id="summaryList"></ul>
+                <li class="d-flex justify-content-between border-0 px-0 pb-0">
+                    <strong>Total</strong>
+                    <span><strong>Php </strong><span id="summaryTotal">0</span></span>
+                </li>
+                <button type="submit" form="orderForm" class="btn mt-3" id="placeOrderBtn" disabled>Place Order</button>
+            </div>
+        </div>
+
+    </div>
+    {% else %}
+    <div class="cart-card text-center">
+        <h3>Your Cart Is Empty</h3>
+        <p>Browse products and add items to your cart.</p>
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+function showCustomAlert(message) {
+    $("#customAlertBox").remove();
+
+    let alertBox = $(`
+        <div class="custom-alert" id="customAlertBox">
+            ${message}
+            <br>
+            <button onclick="$('#customAlertBox').remove()">OK</button>
+        </div>
+    `);
+
+    // Attach inside the cart container so it positions correctly
+    $(".cart-container").prepend(alertBox);
+
+    setTimeout(() => alertBox.addClass("show"), 10);
+
+    setTimeout(() => {
+        alertBox.removeClass("show");
+        setTimeout(() => alertBox.remove(), 400);
+    }, 5000);
+}
+
+
+$(document).ready(function () {
+    function updateSummary() {
+        let total = 0;
+        let summaryList = $("#summaryList");
+        summaryList.empty();
+        let anySelected = false;
+
+        $(".cart-card").each(function () {
+            let row = $(this);
+            let checkbox = row.find(".select-item");
+
+            if (checkbox.prop("checked")) {
+                anySelected = true;
+                let id = checkbox.val();
+                let name = row.find("h3").text();
+                let qty = parseInt(row.find("#quantity" + id).text()) || 0;
+                let price = parseFloat(row.find(".price").data("price")) || 0;
+                let subtotal = price * qty;
+                total += subtotal;
+
+                summaryList.append(`<li>${name} x ${qty} <span>Php ${subtotal.toFixed(2)}</span></li>`);
+                row.css("background-color", "rgba(255,255,255,0.1)");
+            } else {
+                row.css("background-color", "");
+            }
+        });
+
+        $("#summaryTotal").text(total.toFixed(2));
+        $("#placeOrderBtn").prop("disabled", !anySelected || total === 0);
+    }
+
+    $(document).on("change", ".select-item", updateSummary);
+    $(document).on("click", ".plus-cart", function (e) {
+        e.preventDefault(); e.stopImmediatePropagation();
+        let id = $(this).attr("pid");
+        $.ajax({
+            url: "/pluscart",
+            data: { cart_id: id },
+            success: function (res) {
+
+if (res.limited) {
+    showCustomAlert("Only " + res.max_stock + " item(s) left in stock.");
+    return;
+}
+
+
+    $("#quantity" + id).text(res.quantity);
+    updateSummary();
+}
+
+        });
+    });
+    $(document).on("click", ".minus-cart", function (e) {
+        e.preventDefault(); e.stopImmediatePropagation();
+        let id = $(this).attr("pid");
+        $.ajax({
+            url: "/minuscart",
+            data: { cart_id: id },
+            success: function (res) {
+                if (res.removed) { $("#cart-row-" + id).remove(); updateSummary(); return; }
+                $("#quantity" + id).text(res.quantity); updateSummary();
+            }
+        });
+    });
+    $(document).on("click", ".remove-cart", function (e) {
+        e.preventDefault();
+        let id = $(this).attr("pid");
+        $.ajax({
+            url: "/removecart",
+            data: { cart_id: id },
+            success: function () { $("#cart-row-" + id).remove(); updateSummary(); }
+        });
+    });
+
+    updateSummary();
+});
+</script>
+{% endblock %}
